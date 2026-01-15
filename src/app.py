@@ -21,6 +21,42 @@ app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
 
 # In-memory activity database
 activities = {
+    "Soccer Team": {
+        "description": "Outdoor team sport focusing on fitness and teamwork",
+        "schedule": "Tuesdays and Thursdays, 4:00 PM - 6:00 PM",
+        "max_participants": 22,
+        "participants": ["liam@mergington.edu", "noah@mergington.edu"]
+    },
+    "Basketball Team": {
+        "description": "Competitive basketball practices and intramural games",
+        "schedule": "Mondays, Wednesdays, 5:00 PM - 7:00 PM",
+        "max_participants": 15,
+        "participants": ["ava@mergington.edu", "isabella@mergington.edu"]
+    },
+    "Art Club": {
+        "description": "Explore drawing, painting, and mixed media projects",
+        "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
+        "max_participants": 25,
+        "participants": ["mia@mergington.edu", "charlotte@mergington.edu"]
+    },
+    "Choir": {
+        "description": "Vocal training and performances for all skill levels",
+        "schedule": "Fridays, 3:30 PM - 5:00 PM",
+        "max_participants": 30,
+        "participants": ["amelia@mergington.edu", "harper@mergington.edu"]
+    },
+    "Debate Team": {
+        "description": "Develop public speaking, research, and argumentation skills",
+        "schedule": "Tuesdays, 4:00 PM - 5:30 PM",
+        "max_participants": 20,
+        "participants": ["lucas@mergington.edu", "mason@mergington.edu"]
+    },
+    "Math Club": {
+        "description": "Problem solving, competitions, and math enrichment activities",
+        "schedule": "Thursdays, 3:30 PM - 4:30 PM",
+        "max_participants": 18,
+        "participants": ["sophia@mergington.edu", "oliver@mergington.edu"]
+    },
     "Chess Club": {
         "description": "Learn strategies and compete in chess tournaments",
         "schedule": "Fridays, 3:30 PM - 5:00 PM",
@@ -61,6 +97,10 @@ def signup_for_activity(activity_name: str, email: str):
 
     # Get the specific activity
     activity = activities[activity_name]
+
+    # Validate student is not already signed up
+    if email in activity["participants"]:
+        raise HTTPException(status_code=400, detail="Student already signed up for this activity")
 
     # Add student
     activity["participants"].append(email)
