@@ -83,9 +83,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 <li class="participant-item">
                   <span class="participant-avatar" aria-hidden="true">${escapeHtml(avatar)}</span>
                   <span class="participant-name">${escapeHtml(displayName)}</span>
+                  <button class="delete-participant" title="Verwijder deelnemer" data-email="${escapeHtml(email)}" aria-label="Verwijder ${escapeHtml(displayName)}">🗑️</button>
                 </li>
               `;
             }).join("");
+            // Voeg event listeners toe voor delete-knoppen
+            listEl.querySelectorAll('.delete-participant').forEach(btn => {
+              btn.addEventListener('click', async (e) => {
+                const email = btn.getAttribute('data-email');
+                // Vind de activity naam
+                const card = btn.closest('.activity-card');
+                const title = card.querySelector('h4');
+                const activityName = title ? title.textContent : null;
+                if (!activityName || !email) return;
+                if (!confirm(`Weet je zeker dat je ${email} wilt verwijderen uit ${activityName}?`)) return;
+                try {
+                  const response = await fetch(`/activities/${encodeURIComponent(activityName)}/unregister?email=${encodeURIComponent(email)}`, {
+                    method: 'DELETE',
+                  });
+                  const result = await response.json();
+                  if (response.ok) {
+                    fetchActivities();
+                  } else {
+                    alert(result.detail || 'Kon deelnemer niet verwijderen.');
+                  }
+                } catch (err) {
+                  alert('Fout bij verwijderen deelnemer.');
+                }
+              });
+            });
           }
         }
       });
@@ -116,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
         messageDiv.textContent = result.message;
         messageDiv.className = "success";
         signupForm.reset();
+        fetchActivities();
       } else {
         messageDiv.textContent = result.detail || "An error occurred";
         messageDiv.className = "error";
