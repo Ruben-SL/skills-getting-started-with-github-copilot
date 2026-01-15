@@ -1,3 +1,17 @@
+.delete-participant {
+  background: none;
+  border: none;
+  color: #c00;
+  cursor: pointer;
+  font-size: 1.1em;
+  margin-left: 0.5em;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+.delete-participant:hover, .delete-participant:focus {
+  background: #ffeaea;
+}
 * {
   box-sizing: border-box;
   margin: 0;
@@ -72,6 +86,95 @@ section h3 {
 
 .activity-card p {
   margin-bottom: 8px;
+}
+
+/* Participants section inside activity cards */
+.activity-card .participants {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #eee;
+}
+
+.activity-card .participants h5 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #1a237e;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.participant-count {
+  display: inline-block;
+  background: #e8f0ff;
+  color: #1a237e;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(26,35,126,0.06);
+  margin-left: auto;
+}
+
+.participant-list {
+  list-style: none;
+  margin: 8px 0 0 0;
+  padding: 0;
+}
+
+.participant-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+  border: 1px solid rgba(26,35,126,0.04);
+}
+
+.participant-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #e0e7ff;
+  color: #1a237e;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.participant-name {
+  font-size: 14px;
+  color: #333;
+  line-height: 1;
+}
+
+.participants-empty {
+  font-size: 13px;
+  color: #777;
+  font-style: italic;
+  padding: 8px 0;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .participant-item {
+    padding: 6px;
+  }
+  .participant-name {
+    font-size: 13px;
+  }
+  .participant-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
 }
 
 .form-group {
